@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+
+    <link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css">
+    <link rel="icon" href="/js/shop/assets/img/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/js/shop/css/webbase.css" />
+    <link rel="stylesheet" type="text/css" href="/js/shop/css/pages-JD-index.css" />
+    <link rel="stylesheet" type="text/css" href="/js/shop/css/widget-jquery.autocomplete.css" />
+    <link rel="stylesheet" type="text/css" href="/js/shop/css/widget-cartPanelView.css" />
+    <script src="/js/jquery-3.3.1.js"></script>
+    <script src="/js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/shop/js/pages/index.js"></script>
+
+    <script>
+        function toRegister() {
+            location.href = "/register.html";
+        }
+
+        function login() {
+            var memberName = $("#memberName").val();
+            var passWord = $("#passWord").val();
+            $.post(
+                "http://localhost:8081/member/login",
+                {
+                    "memberName":memberName,
+                    "passWord":passWord
+                },
+                function(result) {
+                    if(result.status == 200){
+                        window.localStorage.setItem("token",result.data);
+                        location.href = "/index.html";
+                    }else {
+                        alert(result.msg);
+                    }
+                }
+            )
+        }
+    </script>
+
+    <title>用户登录</title>
+    <script src="common/nav.js"></script>
+</head>
+<body>
+    <div id="navDiv"></div>
+    <h1 style="margin-left: 670px;margin-top: 70px;">用户登录</h1>
+    <form class="form-horizontal" style="margin-top: 50px">
+        <div class="col-sm-3"></div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">用户名称</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="memberName" placeholder="用户名称">
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">用户密码</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="passWord" placeholder="用户密码">
+            </div>
+        </div>
+        <div class="form-group" style="margin-top: 30px">
+            <div class="col-sm-offset-5 col-sm-10">
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" onclick="login()" class="btn btn-info">登录</button>
+                </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" onclick="toRegister()" class="btn btn-warning">注册</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
